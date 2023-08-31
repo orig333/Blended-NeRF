@@ -1,0 +1,38 @@
+expname = lego_test
+basedir = ./logs/blender_lego/
+datadir = ./data/blender/nerf_synthetic/lego
+base_weights = ./base_weights/lego/200000.tar
+box_points_path = box_points/lego_exhaust_box.pt
+dataset_type = blender
+
+no_batching = True
+
+use_viewdirs = True
+white_bkgd = True
+lrate_decay = 500
+
+N_samples = 64
+N_importance = 64
+N_rand = 1024
+
+precrop_iters = 201000
+precrop_frac = 0.5
+
+half_res = True
+
+N_iters = 50000
+
+
+description = "bouquet of flowers in a clear vase"
+CLIP = True
+max_trans = 0.88
+sample_scale = 144
+sample_pose = True
+p_center_scene_origin = 0.85
+use_dir_caption = True
+use_dist_blend = True
+zoom_low = 0.1
+zoom_high = 1.0
+
+
+i_video = 500

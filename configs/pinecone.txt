@@ -1,0 +1,47 @@
+expname = pinecone_test
+basedir = ./logs/pinecone
+datadir = ./data/nerf_360/nerf_real_360/pinecone
+base_weights = ./base_weights/pinecone/200000.tar
+box_points_path = box_points/pinecone_box.pt
+dataset_type = llff
+is360Scene = True
+
+no_batching = True
+
+factor = 8
+llffhold = 8
+
+
+N_samples = 64
+N_importance = 64
+N_rand = 1024
+
+use_viewdirs = True
+lrate_decay = 500
+
+no_ndc = True
+spherify = True
+lindisp = True
+
+description = "a photo of a burning pinecone"
+CLIP = True
+max_trans = 0.2
+sample_scale = 224
+sample_pose = True
+p_center_scene_origin = 0.9
+use_dir_caption = True
+use_dist_blend = True
+dist_blend_alpha = 0.03125
+trans_loss_weight = 0.25
+depth_loss_weight = 5.
+zoom_low = 0.8
+zoom_high = 1.8
+change_color = True
+
+i_video = 500
+
+
+
+
+
+

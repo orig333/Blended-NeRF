@@ -1,0 +1,44 @@
+expname = fern_test
+basedir = ./logs/fern
+datadir = ./data/llff/nerf_llff_data/fern
+base_weights = ./base_weights/fern/200000.tar
+box_points_path = box_points/fern_trunk_box.pt
+dataset_type = llff
+
+no_batching = True
+
+factor = 8
+llffhold = 8
+lrate_decay = 500
+
+
+N_samples = 64
+N_importance = 64
+N_rand = 1024
+
+use_viewdirs = True
+
+N_iters = 50000
+
+description = "a photo of a strawberry"
+CLIP = True
+max_trans = 0.91
+sample_scale = 160
+sample_pose = True
+p_center_scene_origin = 0.9
+use_dir_caption = True
+use_dist_blend = True
+dist_blend_alpha = 0.0625
+trans_loss_weight = 0.25
+depth_loss = True
+max_depth_var = 0.2
+depth_loss_weight = 5.
+zoom_low = 0.2
+zoom_high = 0.8
+blend = True
+sum_in_activation = True
+
+i_video = 500
+
+
+
