@@ -12,6 +12,8 @@ from optimization.losses import ModuleLosses
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+DEBUG = False
+
 
 def ndc2world(points_ndc, hwf):
     """
@@ -1005,8 +1007,7 @@ def config_parser():
     parser.add_argument("--CLIP", action='store_true', help='training with CLIP')
     parser.add_argument("--BLIP", action='store_true', help='training with BLIP')
     parser.add_argument("--sample_pose", action='store_true', help='sample random pose each iteration')
-    parser.add_argument("--sample_scale", type=int, default=60, help='sample scale for patch-based sampler')
-    parser.add_argument("--sample_scale_out", type=int, default=1, help='sample scale for out box images, should be even and less than sample scale')
+    parser.add_argument("--sample_scale", type=int, default=60, help='sample scale for patch-based , should be a multiple of 8')
     parser.add_argument("--change_color", action='store_true', help='whether change color only')
     parser.add_argument("--box_points_path", type=str, default='box_points.pt',
                         help='3d cube coordinates for clip:\n'
@@ -1148,7 +1149,8 @@ def set_train_and_test_args(args, render_kwargs_train, render_kwargs_test, hwf):
     render_kwargs_test['hwf'] = hwf
 
 
-def init_scene_origin(args, hwf_sample_scale, render_kwargs_train):
+def init_scene_origin(args,render_kwargs_train):
+    hwf_sample_scale = render_kwargs_train['hwf']
     box_points = render_kwargs_train['box_points']
     ema_scene_origin_world = None
     ema_scene_origin_ndc = None
@@ -1243,7 +1245,7 @@ def train_blended_nerf():
                                  depth_loss_lambda=args.depth_loss_weight)
 
     # init scene origin
-    ema_scene_origin_world, ema_scene_origin_ndc = init_scene_origin(args, render_kwargs_train['hwf'], render_kwargs_train)
+    ema_scene_origin_world, ema_scene_origin_ndc = init_scene_origin(args, render_kwargs_train)
 
     # Short circuit if only rendering out from trained model
     if args.render_only:
