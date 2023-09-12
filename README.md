@@ -1,4 +1,4 @@
-# Blended-NeRF: Zero-Shot Object Generation and Blending in Existing Neural Radiance Fields <br /> [ICCVW 2023]
+# Blended-NeRF: Zero-Shot Object Generation and Blending in Existing Neural Radiance Fields <br /> [ICCV 2023 AI3DCC]
 
 <a href="https://www.vision.huji.ac.il/blended-nerf/"><img src="https://img.shields.io/static/v1?label=Project&message=Website&color=blue"></a>
 <a href="https://arxiv.org/abs/2306.12760"><img src="https://img.shields.io/badge/arXiv-2111.14818-b31b1b.svg"></a>
@@ -73,13 +73,11 @@ This code borrows from [NeRF-Pytorch](https://github.com/yenchenlin/nerf-pytorch
 # Citation
 If you use this code for your research, please cite the following:
 ```
-@misc{gordon2023blendednerf,
-      title={Blended-NeRF: Zero-Shot Object Generation and Blending in Existing Neural Radiance Fields}, 
-      author={Ori Gordon and Omri Avrahami and Dani Lischinski},
-      year={2023},
-      eprint={2306.12760},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
+@article{gordon2023blended,
+  title={Blended-NeRF: Zero-Shot Object Generation and Blending in Existing Neural Radiance Fields},
+  author={Gordon, Ori and Avrahami, Omri and Lischinski, Dani},
+  journal={arXiv preprint arXiv:2306.12760},
+  year={2023}
 }
 ```
 
