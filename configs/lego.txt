@@ -36,4 +36,4 @@ zoom_low = 0.1
 zoom_high = 1.0
 
 
-i_video = 500
+i_video = 1000

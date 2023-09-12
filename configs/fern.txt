@@ -40,7 +40,7 @@ zoom_high = 0.8
 blend = True
 sum_in_activation = True
 
-i_video = 500
+i_video = 1000
 
 
 
