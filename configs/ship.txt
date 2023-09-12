@@ -1,0 +1,37 @@
+expname = ship_test
+basedir = ./logs/blender_ship/
+datadir = ./data/blender/nerf_synthetic/ship
+base_weights = ./base_weights/ship/200000.tar
+box_points_path = box_points/ship_box.pt
+dataset_type = blender
+
+no_batching = True
+
+use_viewdirs = True
+white_bkgd = True
+lrate_decay = 500
+
+N_samples = 64
+N_importance = 64
+N_rand = 1024
+
+precrop_iters = 201000
+precrop_frac = 0.5
+
+half_res = True
+
+N_iters = 50000
+
+description = "A dslr photo of big dunes of sand"
+CLIP = True
+max_trans = 0.50
+sample_scale = 144
+sample_pose = True
+p_center_scene_origin = 0.85
+use_dir_caption = True
+use_dist_blend = True
+dist_blend_alpha = 1
+zoom_low = 0.6
+zoom_high = 1.
+
+i_video = 1000
