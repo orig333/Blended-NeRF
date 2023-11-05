@@ -13,7 +13,7 @@ if torch.cuda.is_available():
     torch.cuda.empty_cache()
 
 
-def init_scene(config_file_path):
+def init_scene(config_file_path,create_box=False):
     parser = config_parser()
     args = parser.parse_args("--config " + config_file_path)
     hwf, K, poses, images, i_train, i_val, i_test, near, far, render_poses = load_data(args)
@@ -35,11 +35,11 @@ def init_scene(config_file_path):
         'near': near,
         'far': far,
     }
-
-    if torch.cuda.is_available():
-        render_kwargs_test['box_points'] = torch.load(args.box_points_path)
-    else:
-        render_kwargs_test['box_points'] = torch.load(args.box_points_path, map_location=torch.device('cpu'))
+    if not create_box:
+        if torch.cuda.is_available():
+            render_kwargs_test['box_points'] = torch.load(args.box_points_path)
+        else:
+            render_kwargs_test['box_points'] = torch.load(args.box_points_path, map_location=torch.device('cpu'))
 
     render_kwargs_test.update(bds_dict)
 

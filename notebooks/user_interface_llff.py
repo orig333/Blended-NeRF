@@ -31,18 +31,18 @@ w_base_configs = interactive(
     config_path='',
     box_option=['Load Existing Box', 'Create New Box'],
     pose_option=['Sample Random Pose','Set Pose Index'],
-    zoom=(0.1, 1.5, 0.1)
+    zoom=(0.1, 1.5, 0.01)
 )
 
 w_create_box_configs = interactive(
     set_create_box_configs,
     box_path='',
-    box_center_x=(-1.5, 1.5, 0.1),
-    box_center_y=(-1.5, 1.5, 0.1),
-    box_center_z=(-1.5, 1.5, 0.1),
-    edge_size_x=(0.0, 1.5, 0.1),
-    edge_size_y=(0.0, 1.5, 0.1),
-    edge_size_z=(0.0, 1.5, 0.1),
+    box_center_x=(-1.5, 1.5, 0.01),
+    box_center_y=(-1.5, 1.5, 0.01),
+    box_center_z=(-1.5, 1.5, 0.01),
+    edge_size_x=(0.0, 1.5, 0.01),
+    edge_size_y=(0.0, 1.5, 0.01),
+    edge_size_z=(0.0, 1.5, 0.01),
 )
 
 w_load_box_configs = interactive(
