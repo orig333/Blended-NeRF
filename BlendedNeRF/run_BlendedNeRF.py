@@ -60,8 +60,8 @@ def sample_img(i_train, images, poses, hwf, K, render_kwargs, render_factor, mod
     if args.sample_pose:
         caption = args.description
         if args.dataset_type == 'blender' or args.is360Scene:
-            theta = (-180. - 180.) * torch.rand(1) + 180
-            phi = (-90. - 15.) * torch.rand(1) + 15.
+            theta = ((-180. - 180.) * np.random.rand(1) + 180)[0]
+            phi = ((-90. - 15.) * np.random.rand(1) + 15.)[0]
             if args.use_dir_caption:
                 if phi < -90 * (3 / 4) + 10 * (1 / 4):
                     caption = args.description + ", top down view"
@@ -621,10 +621,8 @@ def render_full_frame_fn(pts, viewdirs, box_points, network_query_fn, run_fn, ru
             else:
                 raw_in = torch.zeros(pts.shape[0], pts.shape[1], raw_fixed.shape[2])
 
-            raw_out_box_fixed = raw_fixed.clone()
-            raw = torch.zeros_like(raw_out_box_fixed)
+            raw = raw_fixed.clone()
             raw[pt_is_in_box] = raw_in[pt_is_in_box]
-            raw[pt_is_in_box == False] = raw_out_box_fixed[pt_is_in_box == False]
             rgb_map, disp_map, acc_map, weights, depth_map = raw2outputs(raw, z_vals, rays_d, raw_noise_std, white_bkgd, pytest=pytest)
 
         return rgb_map, disp_map, acc_map, weights, depth_map
@@ -792,6 +790,8 @@ def render_rays(ray_batch,
         z_vals = lower + (upper - lower) * t_rand
 
     pts = rays_o[..., None, :] + rays_d[..., None, :] * z_vals[..., :, None]  # [N_rays, N_samples, 3]
+
+    pt_is_in_box = None
     if box_points is not None:
         pt_is_in_box = (((box_points[:, 0].min() <= pts[..., 0]) & (box_points[:, 0].max() >= pts[..., 0])) &
                         ((box_points[:, 1].min() <= pts[..., 1]) & (box_points[:, 1].max() >= pts[..., 1])) &
@@ -994,7 +994,7 @@ def config_parser():
                         help='frequency of tensorboard image logging')
     parser.add_argument("--i_weights", type=int, default=1000,
                         help='frequency of weight ckpt saving')
-    parser.add_argument("--i_testset", type=int, default=2000,
+    parser.add_argument("--i_testset", type=int, default=1000,
                         help='frequency of testset saving')
     parser.add_argument("--i_video", type=int, default=2000,
                         help='frequency of render_poses video saving')
@@ -1261,7 +1261,6 @@ def train_blended_nerf():
             testsavedir = os.path.join(basedir, expname, 'renderonly_{}_{:06d}'.format('test' if args.render_test else 'path', start))
             os.makedirs(testsavedir, exist_ok=True)
             print('test poses shape', render_poses.shape)
-
             render_kwargs_test['render_in_box'] = False
             render_kwargs_test['update_bounds'] = False
             render_kwargs_test['scene_origin'] = ema_scene_origin_world.value
@@ -1390,8 +1389,7 @@ def train_blended_nerf():
                 render_kwargs_test['scene_origin'] = ema_scene_origin_world.value
                 if args.dataset_type == 'llff' and not args.is360Scene:
                     render_kwargs_test['scene_origin_ndc'] = ema_scene_origin_ndc.value
-                render_kwargs_test['N_samples'] = 128
-                render_kwargs_test['N_importance'] = 256
+                render_kwargs_test['data_type'] = args.dataset_type
                 rgbs, disps = render_path(render_poses, hwf, K, args.chunk, render_kwargs_test)
             print('Done, saving', rgbs.shape, disps.shape)
             moviebase = os.path.join(basedir, expname, '{}_spiral_{:06d}_'.format(expname, i))

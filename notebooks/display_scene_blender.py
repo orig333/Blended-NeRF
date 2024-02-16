@@ -48,6 +48,11 @@ def init_scene(config_file_path):
 
     render_kwargs_test.update(bds_dict)
 
+    if not os.path.exists(args.box_points_path):
+        # create empty file if not exists
+        box = torch.zeros((8,3))
+        torch.save(box,args.box_points_path)
+
     if torch.cuda.is_available():
         render_kwargs_test['box_points'] = torch.load(args.box_points_path)
     else:
